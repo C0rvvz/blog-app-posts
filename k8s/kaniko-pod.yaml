@@ -1,0 +1,17 @@
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:latest
+    volumeMounts:
+      - name: kaniko-secret
+        mountPath: /kaniko/.docker/
+    args:
+      - "--dockerfile=/workspace/Dockerfile"
+      - "--context=dir://workspace/"
+      - "--destination=docker.io/c0rvvz/blog-app-posts:latest"
+      - "--skip-tls-verify"
+      - "--insecure"
+  volumes:
+    - name: kaniko-secret
+      secret:
+        secretName: dockerhub-secret

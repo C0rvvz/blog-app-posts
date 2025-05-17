@@ -14,21 +14,16 @@ spec:
     spec:
       serviceAccountName: jenkins
       containers:
-      - name: jenkins
-        image: c0rvvz/jenkins-controller-jcasc
-        ports:
-        - containerPort: 8080
-        env:
-        - name: CASC_JENKINS_CONFIG
-          value: /var/jenkins_home/casc.yaml
-        - name: JAVA_OPTS
-          value: "-Djenkins.install.runSetupWizard=false"
-        volumeMounts:
-        - name: jenkins-home
-          mountPath: /var/jenkins_home
-        - name: jenkins-casc-config
-          mountPath: /var/jenkins_home/casc.yaml
-          subPath: casc.yaml
+        - name: jenkins
+          image: jenkins/jenkins:lts
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+            - name: jenkins-casc-config
+              mountPath: /var/jenkins_home/casc.yaml
+              subPath: casc.yaml
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
